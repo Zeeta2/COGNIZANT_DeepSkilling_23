@@ -3,26 +3,46 @@
 -- and updates the balance of all savings accounts by applying an interest rate 
 --of 1% to the current balance.
 
-CREATE TABLE SavingsAccounts (
-    account_id NUMBER PRIMARY KEY,
-    customer_name VARCHAR2(50),
-    balance NUMBER
+CREATE TABLE Customers (
+    CustomerID NUMBER PRIMARY KEY,
+    Name VARCHAR2(100),
+    DOB DATE,
+    Balance NUMBER,
+    LastModified DATE
 );
-INSERT INTO SavingsAccounts VALUES (101,'John',10000);
-INSERT INTO SavingsAccounts VALUES (102,'David',20000);
-INSERT INTO SavingsAccounts VALUES (103,'Mary',15000);
+
+CREATE TABLE Accounts (
+    AccountID NUMBER PRIMARY KEY,
+    CustomerID NUMBER,
+    AccountType VARCHAR2(20),
+    Balance NUMBER,
+    LastModified DATE,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+
+INSERT INTO Customers
+VALUES (1, 'John Doe', TO_DATE('1985-05-15','YYYY-MM-DD'), 1000, SYSDATE);
+
+INSERT INTO Customers
+VALUES (2, 'Jane Smith', TO_DATE('1990-07-20','YYYY-MM-DD'), 1500, SYSDATE);
+
+INSERT INTO Accounts
+VALUES (1, 1, 'Savings', 1000, SYSDATE);
+
+INSERT INTO Accounts
+VALUES (2, 2, 'Checking', 1500, SYSDATE);
+
 COMMIT;
 
-SELECT * FROM SavingsAccounts;
+SELECT * FROM Accounts;
 CREATE OR REPLACE PROCEDURE ProcessMonthlyInterest
 IS
 BEGIN
-UPDATE SavingsAccounts
-SET balance=balance+(balance*0.01);
+UPDATE Accounts
+SET Balance=Balance+(Balance*0.01),LastModified=SYSDATE
+    WHERE AccountType='Savings';
 COMMIT;
 END;
 /
 EXEC ProcessMonthlyInterest;
-SELECT * FROM SavingsAccounts;
-EXEC ProcessMonthlyInterest;
-SELECT * FROM SavingsAccounts;
+SELECT * FROM Accounts;
