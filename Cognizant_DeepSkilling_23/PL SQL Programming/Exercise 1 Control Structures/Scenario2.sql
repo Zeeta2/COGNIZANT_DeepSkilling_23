@@ -1,3 +1,7 @@
+--Scenario 2: A customer can be promoted to VIP status based on their balance.
+-- o	Question: Write a PL/SQL block that iterates through all customers and sets
+--a flag IsVIP to TRUE for those with a balance over $10,000.
+
 CREATE TABLE Customers(
   Customer_id NUMBER PRIMARY KEY,
   name VARCHAR2(50),
