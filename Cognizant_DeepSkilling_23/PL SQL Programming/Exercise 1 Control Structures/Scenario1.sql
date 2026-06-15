@@ -2,39 +2,53 @@
 --Question: Write a PL/SQL block that loops through all customers, checks their age, 
 --and if they are above 60, apply a 1% discount to their current loan interest rates.
 
-CREATE TABLE Customers(
-    customer_id NUMBER PRIMARY KEY,
-    name VARCHAR2(50),
-    age NUMBER
+CREATE TABLE Customers (
+    CustomerID NUMBER PRIMARY KEY,
+    Name VARCHAR2(100),
+    DOB DATE,
+    Balance NUMBER,
+    LastModified DATE
 );
 
-CREATE TABLE Loans(
-    loan_id NUMBER PRIMARY KEY,
-    customer_id NUMBER,
-    interest_rate NUMBER,
-    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+CREATE TABLE Loans (
+    LoanID NUMBER PRIMARY KEY,
+    CustomerID NUMBER,
+    LoanAmount NUMBER,
+    InterestRate NUMBER,
+    StartDate DATE,
+    EndDate DATE,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
 );
-INSERT INTO Customers VALUES (1, 'John', 45);
-INSERT INTO Customers VALUES (2, 'David', 65);
-INSERT INTO Customers VALUES (3, 'Mary', 70);
+INSERT INTO Customers
+VALUES (1, 'John Doe', TO_DATE('1985-05-15', 'YYYY-MM-DD'), 1000, SYSDATE);
 
-INSERT INTO Loans VALUES (101, 1, 10);
-INSERT INTO Loans VALUES (102, 2, 10);
-INSERT INTO Loans VALUES (103, 3, 12);
---TABLE BEFORE CHANGE
-SELECT * FROM Loans;
---SCENARIO 1
+INSERT INTO Customers
+VALUES (2, 'Jane Smith', TO_DATE('1990-07-20', 'YYYY-MM-DD'), 1500, SYSDATE);
+
+INSERT INTO Customers
+VALUES (3, 'Mary Senior', TO_DATE('1950-01-01', 'YYYY-MM-DD'), 2000, SYSDATE);
+
+INSERT INTO Loans
+VALUES (1, 1, 5000, 5, SYSDATE, ADD_MONTHS(SYSDATE, 60));
+
+INSERT INTO Loans
+VALUES (2, 2, 7000, 6, SYSDATE, ADD_MONTHS(SYSDATE, 48));
+
+INSERT INTO Loans
+VALUES (3, 3, 10000, 7, SYSDATE, ADD_MONTHS(SYSDATE, 36));
+
 COMMIT;
+SELECT * FROM Loans;
 BEGIN 
   FOR c IN (
-    SELECT customer_id,name,age
+    SELECT customerID,Name,DOB
     FROM Customers
     )
   LOOP
-    IF c.age > 60 THEN
+    IF MONTHS_BETWEEN(SYSDATE,c.DOB)/12 > 60 THEN
       UPDATE Loans
-      SET interest_rate=interest_rate-1
-      WHERE customer_id=c.customer_id;
+      SET InterestRate=InterestRate-1
+      WHERE CustomerID=c.CustomerID;
     END IF;
   END LOOP;
   COMMIT;
@@ -42,3 +56,4 @@ END;
 /
 --TABLE AFTER CHANGE
 SELECT * FROM Loans;
+
