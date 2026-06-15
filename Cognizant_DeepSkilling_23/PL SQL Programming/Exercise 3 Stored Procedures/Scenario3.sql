@@ -3,14 +3,35 @@
 --from one account to another, checking that the source account has sufficient balance 
 --before making the transfer.
 
-CREATE TABLE Accounts (
-    account_id NUMBER PRIMARY KEY,
-    customer_name VARCHAR2(50),
-    balance NUMBER
+CREATE TABLE Customers (
+    CustomerID NUMBER PRIMARY KEY,
+    Name VARCHAR2(100),
+    DOB DATE,
+    Balance NUMBER,
+    LastModified DATE
 );
-INSERT INTO Accounts VALUES(101,'John',10000);
-INSERT INTO Accounts VALUES(102,'David',5000);
-INSERT INTO Accounts VALUES(103,'Mary',15000);
+
+CREATE TABLE Accounts (
+    AccountID NUMBER PRIMARY KEY,
+    CustomerID NUMBER,
+    AccountType VARCHAR2(20),
+    Balance NUMBER,
+    LastModified DATE,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+
+INSERT INTO Customers
+VALUES (1, 'John Doe', TO_DATE('1985-05-15','YYYY-MM-DD'), 1000, SYSDATE);
+
+INSERT INTO Customers
+VALUES (2, 'Jane Smith', TO_DATE('1990-07-20','YYYY-MM-DD'), 1500, SYSDATE);
+
+INSERT INTO Accounts
+VALUES (101, 1, 'Savings', 10000, SYSDATE);
+
+INSERT INTO Accounts
+VALUES (102, 2, 'Savings', 5000, SYSDATE);
+
 COMMIT;
 
 SELECT * FROM Accounts;
@@ -25,15 +46,15 @@ BEGIN
   SELECT balance
   INTO v_bal
   FROM Accounts
-  WHERE account_id=p_source_acc;
+  WHERE AccountID=p_source_acc;
   IF v_bal>=p_amount THEN
     UPDATE Accounts
-    SET balance=balance-p_amount
-    WHERE account_id=p_source_acc;
+    SET Balance=Balance-p_amount
+    WHERE AccountID=p_source_acc;
 
     UPDATE Accounts
-    SET balance=balance+p_amount
-    WHERE account_id=P_target_acc;
+    SET Balance=Balance+p_amount
+    WHERE AccountID=P_target_acc;
     COMMIT;
     DBMS_OUTPUT.PUT_LINE('Transfer Successful');
   ELSE
