@@ -1,0 +1,3 @@
+00:54:56.033 [main] INFO  com.cognizant.AppenderExample - Application started successfully.
+00:54:56.035 [main] WARN  com.cognizant.AppenderExample - This is a warning message.
+00:54:56.035 [main] ERROR com.cognizant.AppenderExample - This is an error message.
