@@ -5,20 +5,14 @@
 --passed as a parameter.
 
 CREATE TABLE Employees (
-    EmployeeID NUMBER PRIMARY KEY,
-    Name VARCHAR2(100),
-    Position VARCHAR2(50),
-    Salary NUMBER,
-    Department VARCHAR2(50),
-    HireDate DATE
+    employee_id NUMBER PRIMARY KEY,
+    employee_name VARCHAR2(50),
+    department VARCHAR2(30),
+    salary NUMBER
 );
-
-INSERT INTO Employees
-VALUES (1, 'Alice Johnson', 'Manager', 70000, 'HR', TO_DATE('2015-06-15','YYYY-MM-DD'));
-
-INSERT INTO Employees
-VALUES (2, 'Bob Brown', 'Developer', 60000, 'IT', TO_DATE('2017-03-20','YYYY-MM-DD'));
-
+INSERT INTO Employees VALUES (101,'John','IT',50000);
+INSERT INTO Employees VALUES (102,'David','IT',60000);
+INSERT INTO Employees VALUES (103,'Mary','HR',45000);
 COMMIT;
 
 SELECT * FROM Employees;
@@ -30,7 +24,7 @@ IS
 BEGIN
   UPDATE Employees
   SET salary=salary+(salary*p_bonus/100)
-  WHERE Department=p_department;
+  WHERE department=p_department;
   COMMIT;
 END;
 /
