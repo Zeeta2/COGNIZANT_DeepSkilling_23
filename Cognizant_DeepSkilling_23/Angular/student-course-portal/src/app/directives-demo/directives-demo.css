@@ -1,0 +1,26 @@
+h2 {
+  text-align: center;
+  color: #1976d2;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+li {
+  margin: 8px;
+  font-size: 18px;
+}
+
+.active {
+  color: green;
+  font-weight: bold;
+}
+
+.inactive {
+  color: red;
+}

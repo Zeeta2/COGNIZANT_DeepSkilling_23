@@ -1,0 +1,19 @@
+<h2>Available Courses</h2>
+
+<div class="course-card" *ngFor="let course of courses$ | async">
+
+  <h3>{{ course.name }}</h3>
+
+  <button
+    *ngIf="!isEnrolled(course.id, enrolledIds$ | async); else enrolledButton"
+    (click)="enroll(course.id)">
+    Enroll
+  </button>
+
+  <ng-template #enrolledButton>
+    <button (click)="unenroll(course.id)">
+      Unenroll
+    </button>
+  </ng-template>
+
+</div>

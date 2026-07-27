@@ -1,0 +1,96 @@
+<h2>Reactive Student Form</h2>
+
+<form [formGroup]="studentForm" (ngSubmit)="submitForm()">
+
+
+<label>
+Name:
+</label>
+
+<input 
+type="text"
+formControlName="name">
+
+
+<p *ngIf="studentForm.controls.name.invalid && studentForm.controls.name.touched">
+Name must be at least 3 characters
+</p>
+
+
+<label>
+Email:
+</label>
+
+<input 
+type="email"
+formControlName="email">
+
+
+<p *ngIf="studentForm.controls.email.invalid && studentForm.controls.email.touched">
+Enter a valid email address
+</p>
+
+
+<label>
+Course:
+</label>
+
+<select formControlName="course">
+
+<option value="">
+Select Course
+</option>
+
+<option>
+Angular
+</option>
+
+<option>
+Java
+</option>
+
+<option>
+Python
+</option>
+
+</select>
+
+
+<p *ngIf="studentForm.controls.course.invalid && studentForm.controls.course.touched">
+Please select a course
+</p>
+
+
+<br><br>
+
+<button 
+type="submit"
+[disabled]="studentForm.invalid">
+
+Register
+
+</button>
+
+
+</form>
+
+
+<div *ngIf="submitted">
+
+<h3>
+Registration Successful
+</h3>
+
+<p>
+Name: {{studentForm.value.name}}
+</p>
+
+<p>
+Email: {{studentForm.value.email}}
+</p>
+
+<p>
+Course: {{studentForm.value.course}}
+</p>
+
+</div>

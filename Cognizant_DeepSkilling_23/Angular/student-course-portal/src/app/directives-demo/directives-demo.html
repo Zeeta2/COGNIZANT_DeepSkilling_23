@@ -1,0 +1,40 @@
+<h2>Angular Directives Demo</h2>
+
+
+<!-- ngIf Example -->
+
+<button (click)="showCourses = !showCourses">
+  Show / Hide Courses
+</button>
+
+
+<div *ngIf="showCourses">
+
+  <h3>Available Courses</h3>
+
+</div>
+
+
+<!-- ngFor Example -->
+
+<ul>
+
+  <li *ngFor="let course of courses">
+    {{ course }}
+  </li>
+
+</ul>
+
+
+<!-- ngClass Example -->
+
+<p [ngClass]="active ? 'active' : 'inactive'">
+  Status using ngClass
+</p>
+
+
+<!-- ngStyle Example -->
+
+<p [ngStyle]="{'color':'blue','font-size':'20px'}">
+  Styled using ngStyle
+</p>

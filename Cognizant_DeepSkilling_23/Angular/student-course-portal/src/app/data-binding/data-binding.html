@@ -1,0 +1,23 @@
+<h2>Angular Data Binding Demo</h2>
+
+<!-- Interpolation -->
+<h3>{{ title }}</h3>
+
+<p>Student Name: {{ studentName }}</p>
+
+<!-- Property Binding -->
+<img [src]="imageUrl" width="150">
+
+<br><br>
+
+<!-- Event Binding -->
+<button (click)="showMessage()">
+  Click Me
+</button>
+
+<p>{{ message }}</p>
+
+<!-- Two-way Binding -->
+<input [(ngModel)]="studentName">
+
+<p>Updated Name: {{ studentName }}</p>

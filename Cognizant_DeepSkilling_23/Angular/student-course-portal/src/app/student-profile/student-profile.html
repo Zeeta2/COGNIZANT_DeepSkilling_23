@@ -1,0 +1,20 @@
+<h2>Student Profile</h2>
+
+<p>Name: {{name | titlecase}}</p>
+
+<p>Course: {{course | titlecase}}</p>
+
+<p>Year: {{year}}</p>
+
+
+<h3>Courses from Service</h3>
+
+<ul>
+
+<li *ngFor="let c of courses">
+
+{{c.name}}
+
+</li>
+
+</ul>
